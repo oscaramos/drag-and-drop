@@ -1,0 +1,65 @@
+.container {
+    width: 100%;
+    padding: 16px;
+
+    border-radius: 5px;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.title {
+    padding: 12px;
+
+    border-radius: 5px;
+
+    background-color: #A2622D;
+
+    color: white;
+    text-align: center;
+}
+
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-top: 8px;
+}
+
+.task {
+    padding: 12px;
+    border-radius: 5px;
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.operationsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+
+    margin-top: 8px;
+}
+
+.operation {
+    padding: 12px;
+
+    border-radius: 5px;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.operation:hover {
+    background-color: #E9EBEB;
+    color: black;
+}
+
