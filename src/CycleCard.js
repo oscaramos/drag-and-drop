@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 import styles from './CycleCard.module.css'
 
-export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTask }) {
+function Task({ id, content, onEdit }) {
+
+  const handleEdit = () => {
+    onEdit({ id, content: "ajajaja" })
+  }
+
+  return (
+    <div className={ styles.task } onClick={handleEdit}>
+      { content }
+    </div>
+  )
+}
+
+export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTask, onEditTask }) {
   const [status, setStatus] = useState('idle')
 
   const handleAdd = () => {
@@ -19,7 +32,7 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
       <div className={ styles.taskContainer }>
         {
-          tasks.map(task => <div className={ styles.task }>{ task.content }</div>)
+          tasks.map(task => <Task {...task} onEdit={(newTask) => onEditTask(title, newTask)} />)
         }
       </div>
 

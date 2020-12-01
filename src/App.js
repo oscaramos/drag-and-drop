@@ -4,28 +4,52 @@ import CycleCard from './CycleCard'
 import useCycle from './useCycle'
 
 export default function App() {
-  const [backlog, { add: addToBacklog }] = useCycle()
-  const [inProgress, { add: addToInProgress }] = useCycle()
-  const [complete, { add: addToComplete }] = useCycle()
-  const [onHold, { add: addToOnHold }] = useCycle()
+  const [backlog, { add: addToBacklog, edit: editToBacklog }] = useCycle()
+  const [inProgress, { add: addToInProgress, edit: editToInProgress }] = useCycle()
+  const [complete, { add: addToComplete, edit: editToComplete }] = useCycle()
+  const [onHold, { add: addToOnHold, edit: editToOnHold }] = useCycle()
 
-  const handleAddTask = (title, task) => {
+  const getOperation = (title, operation) => {
     switch (title) {
       case 'Backlog':
-        addToBacklog(task)
-        break
+        switch (operation) {
+          case 'add': return addToBacklog
+          case 'edit': return editToBacklog
+          default:
+            throw new Error('Invalid operation')
+        }
       case 'In Progress':
-        addToInProgress(task)
-        break
+        switch (operation) {
+          case 'add': return addToInProgress
+          case 'edit': return editToInProgress
+          default:
+            throw new Error('Invalid operation')
+        }
       case 'Complete':
-        addToComplete(task)
-        break
+        switch (operation) {
+          case 'add': return addToComplete
+          case 'edit': return editToComplete
+          default:
+            throw new Error('Invalid operation')
+        }
       case 'On Hold':
-        addToOnHold(task)
-        break
+        switch (operation) {
+          case 'add': return addToOnHold
+          case 'edit': return editToOnHold
+          default:
+            throw new Error('Invalid operation')
+        }
       default:
         throw new Error('Invalid title')
     }
+  }
+
+  const handleAddTask = (title, task) => {
+    getOperation(title, 'add')(task)
+  }
+
+  const handleEditTask = (title, newTask) => {
+    getOperation(title, 'edit')(newTask)
   }
 
   return (
@@ -37,24 +61,28 @@ export default function App() {
           titleBackgroundColor='#A2622D'
           tasks={ backlog.tasks }
           onAddTask={ handleAddTask }
+          onEditTask={ handleEditTask }
         />
         <CycleCard
           title='In Progress'
           titleBackgroundColor='#1B6161'
           tasks={ inProgress.tasks }
           onAddTask={ handleAddTask }
+          onEditTask={ handleEditTask }
         />
         <CycleCard
           title='Complete'
           titleBackgroundColor='#248224'
           tasks={ complete.tasks }
           onAddTask={ handleAddTask }
+          onEditTask={ handleEditTask }
         />
         <CycleCard
           title='On Hold'
           titleBackgroundColor='#A22D22'
           tasks={ onHold.tasks }
           onAddTask={ handleAddTask }
+          onEditTask={ handleEditTask }
         />
       </div>
     </div>
