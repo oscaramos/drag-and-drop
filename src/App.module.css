@@ -44,7 +44,7 @@ h2 {
     flex-direction: row;
     gap: 16px;
 
-    width: calc(100% - (36px*2)); /* full width - padding on sides */
+    width: 100%;
     padding: 0 36px;
 }
 
