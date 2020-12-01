@@ -18,7 +18,17 @@ export default function useCycle() {
   ])
 
   const add = (task) => {
-    setTasks(prevTasks => [...prevTasks, { ...task, id: prevTasks[prevTasks.length-1].id+1 }])
+    setTasks(prevTasks =>
+      [
+        ...prevTasks,
+        {
+          ...task,
+          id: prevTasks.length>0
+            ? prevTasks[prevTasks.length-1]?.id + 1
+            : 1
+        }
+      ]
+    )
   }
 
   const edit = (newTask) => {
