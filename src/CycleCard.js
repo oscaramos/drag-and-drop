@@ -23,7 +23,7 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
   const handleSave = () => {
     setStatus('idle')
-    onAddTask(title, { content: "Title" })
+    onAddTask({ content: "Title" })
   }
 
   return (
@@ -32,7 +32,7 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
       <div className={ styles.taskContainer }>
         {
-          tasks.map(task => <Task {...task} onEdit={(newTask) => onEditTask(title, newTask)} />)
+          tasks.map(task => <Task {...task} onEdit={onEditTask} />)
         }
       </div>
 
