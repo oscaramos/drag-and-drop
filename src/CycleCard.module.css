@@ -37,6 +37,12 @@
     cursor: pointer;
 }
 
+.task:focus {
+    background-color: white;
+    color: black;
+    outline: 0;
+}
+
 .operationsContainer {
     display: flex;
     flex-direction: column;

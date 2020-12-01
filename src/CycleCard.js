@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './CycleCard.module.css'
+import ContentEditable from 'react-contenteditable'
 
 function Task({ id, content, onEdit }) {
+  const internalContent = useRef(content)
 
-  const handleEdit = () => {
-    onEdit({ id, content: "ajajaja" })
+  const handleChange = (event) => {
+    internalContent.current = event.target.value
+  }
+
+  const handleBlur = () => {
+    onEdit({ id, content: internalContent.current })
   }
 
   return (
-    <div className={ styles.task } onClick={handleEdit}>
-      { content }
-    </div>
+    <ContentEditable
+      tagName="div"
+      className={ styles.task }
+      html={ String(content) }
+      disabled={false}
+      onChange={handleChange}
+      onBlur={handleBlur}
+    />
   )
 }
 
@@ -32,7 +43,7 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
       <div className={ styles.taskContainer }>
         {
-          tasks.map(task => <Task {...task} onEdit={onEditTask} />)
+          tasks.map(task => <Task key={`${ title }-${ task.id }`} onEdit={onEditTask} {...task} />)
         }
       </div>
 
