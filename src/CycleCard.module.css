@@ -23,7 +23,28 @@
     flex-direction: column;
     gap: 8px;
 
+    max-height: 512px;
+    overflow-x: auto;
+
     margin-top: 8px;
+}
+
+.taskContainer::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+    background-color: #444444;
+}
+
+.taskContainer::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #444444;
+}
+
+.taskContainer::-webkit-scrollbar-thumb
+{
+    background-color: #1c1c1c;
+    border: 2px solid #1c1c1c;
 }
 
 .task {
