@@ -2,8 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { useDrag, useDrop } from 'react-dnd'
 
-import { ItemTypes } from './constants'
 import styles from './CycleCard.module.css'
+
+const ItemTypes = {
+  TASK: 'task'
+}
 
 function AddItemInput({ value, onChange }) {
   return (
