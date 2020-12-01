@@ -1,6 +1,20 @@
 import React, { useRef, useState } from 'react'
-import styles from './CycleCard.module.css'
 import ContentEditable from 'react-contenteditable'
+import styles from './CycleCard.module.css'
+
+function AddItemInput({ value, onChange }) {
+  return (
+    <div className={ styles.addItemContainer }>
+      <ContentEditable
+        tagName='div'
+        className={ styles.addItemInnerContainer }
+        html={ value.current }
+        disabled={ false }
+        onChange={ onChange }
+      />
+    </div>
+  )
+}
 
 function Task({ id, content, onEdit }) {
   const internalContent = useRef(content)
@@ -15,18 +29,19 @@ function Task({ id, content, onEdit }) {
 
   return (
     <ContentEditable
-      tagName="div"
+      tagName='div'
       className={ styles.task }
-      html={ String(content) }
-      disabled={false}
-      onChange={handleChange}
-      onBlur={handleBlur}
+      html={ internalContent.current }
+      disabled={ false }
+      onChange={ handleChange }
+      onBlur={ handleBlur }
     />
   )
 }
 
 export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTask, onEditTask }) {
   const [status, setStatus] = useState('idle')
+  const addItemText = useRef('')
 
   const handleAdd = () => {
     setStatus('adding')
@@ -34,7 +49,12 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
   const handleSave = () => {
     setStatus('idle')
-    onAddTask({ content: "Title" })
+    onAddTask({ content: addItemText.current })
+    addItemText.current = ''
+  }
+
+  const handleChange = (event) => {
+    addItemText.current = event.target.value
   }
 
   return (
@@ -43,18 +63,21 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
       <div className={ styles.taskContainer }>
         {
-          tasks.map(task => <Task key={`${ title }-${ task.id }`} onEdit={onEditTask} {...task} />)
+          tasks.map(task => <Task key={ `${ title }-${ task.id }` } onEdit={ onEditTask } { ...task } />)
         }
       </div>
 
       <div className={ styles.operationsContainer }>
         {
           status === 'idle' &&
-          <div className={ styles.addOperation } onClick={handleAdd}>➕ Add item</div>
+          <div className={ styles.addOperation } onClick={ handleAdd }>➕ Add item</div>
         }
         {
           status === 'adding' &&
-          <div className={ styles.saveOperation } onClick={handleSave}>Save item</div>
+          <>
+            <div className={ styles.saveOperation } onClick={ handleSave }>Save item</div>
+            <AddItemInput value={ addItemText } onChange={ handleChange } />
+          </>
         }
       </div>
     </div>
