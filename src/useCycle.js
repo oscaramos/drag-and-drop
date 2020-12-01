@@ -37,9 +37,17 @@ export default function useCycle() {
     )
   }
 
+  const remove = (taskToRemove) => {
+    setTasks(
+      prevTasks => {
+        return prevTasks.filter(task => task.id !== taskToRemove.id)
+      }
+    )
+  }
+
   const data = {
     tasks,
   }
 
-  return [data, { add, edit }]
+  return [data, { add, edit, remove }]
 }
