@@ -41,13 +41,13 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    align-items: flex-start;
 
     margin-top: 8px;
 }
 
-.operation {
+.addOperation {
     padding: 12px;
+    align-self: flex-start;
 
     border-radius: 5px;
 
@@ -58,8 +58,26 @@
     transition: all 0.3s ease-in-out;
 }
 
-.operation:hover {
+.addOperation:hover {
     background-color: #E9EBEB;
     color: black;
 }
 
+.saveOperation {
+    padding: 12px;
+    align-self: flex-end;
+
+    border-radius: 5px;
+
+    background-color: #9A5D2B;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: all 0.1s ease-in-out;
+}
+
+.saveOperation:hover {
+    filter: brightness(0.9);
+}
