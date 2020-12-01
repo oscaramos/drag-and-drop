@@ -1,5 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
+import { useDrag, useDrop } from 'react-dnd'
+
+import { ItemTypes } from './constants'
 import styles from './CycleCard.module.css'
 
 function AddItemInput({ value, onChange }) {
@@ -16,8 +19,23 @@ function AddItemInput({ value, onChange }) {
   )
 }
 
-function Task({ id, content, onEdit }) {
+function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
   const internalContent = useRef(content)
+
+  const [{ isDragging, didDropped }, drag] = useDrag({
+    item: {
+      type: ItemTypes.TASK,
+      data: { content: internalContent.current }
+    },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+    end(item, monitor) {
+      if (monitor.didDrop()) {
+        onRemoveTask({ id })
+      }
+    },
+  })
 
   const handleChange = (event) => {
     internalContent.current = event.target.value
@@ -27,19 +45,60 @@ function Task({ id, content, onEdit }) {
     onEdit({ id, content: internalContent.current })
   }
 
+  useEffect(() => {
+    onIsDragging(isDragging)
+    // tricky bug when adding onIsDragging as dependency
+    // eslint-disable-next-line
+  }, [isDragging])
+
   return (
     <ContentEditable
       tagName='div'
+      style={{ backgroundColor: didDropped? 'red': undefined }}
       className={ styles.task }
       html={ internalContent.current }
       disabled={ false }
       onChange={ handleChange }
       onBlur={ handleBlur }
+      innerRef={ drag }
     />
   )
 }
 
-export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTask, onEditTask }) {
+function TaskContainer({ title, tasks, color, onAddTask, onEditTask, onRemoveTask }) {
+  const [isDragging, setIsDragging] = useState(false)
+
+  const [{ isOver }, drop] = useDrop({
+    accept: ItemTypes.TASK,
+    drop: (item) => onAddTask({ content: item.data.content }),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+    }),
+  })
+
+  const highlight = isDragging || isOver
+
+  return (
+    <div
+      className={ styles.taskContainer }
+      style={ { backgroundColor: highlight ? color : undefined } }
+      ref={ drop }
+    >
+      {
+        tasks.map(task =>
+          <Task
+            key={ `${ title }-${ task.id }` }
+            onEdit={ onEditTask }
+            onIsDragging={ (isDragging) => setIsDragging(isDragging) }
+            onRemoveTask={ onRemoveTask }
+            { ...task }
+          />)
+      }
+    </div>
+  )
+}
+
+export default function CycleCard({ title, color, tasks, onAddTask, onEditTask, onRemoveTask }) {
   const [status, setStatus] = useState('idle')
   const addItemText = useRef('')
 
@@ -59,13 +118,16 @@ export default function CycleCard({ title, titleBackgroundColor, tasks, onAddTas
 
   return (
     <div className={ styles.container }>
-      <h2 className={ styles.title } style={ { backgroundColor: titleBackgroundColor } }>{ title }</h2>
+      <h2 className={ styles.title } style={ { backgroundColor: color } }>{ title }</h2>
 
-      <div className={ styles.taskContainer }>
-        {
-          tasks.map(task => <Task key={ `${ title }-${ task.id }` } onEdit={ onEditTask } { ...task } />)
-        }
-      </div>
+      <TaskContainer
+        title={ title }
+        tasks={ tasks }
+        onAddTask={ onAddTask }
+        onEditTask={ onEditTask }
+        onRemoveTask={ onRemoveTask }
+        color={ color }
+      />
 
       <div className={ styles.operationsContainer }>
         {
