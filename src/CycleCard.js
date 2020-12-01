@@ -50,9 +50,7 @@ function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
 
   useEffect(() => {
     onIsDragging(isDragging)
-    // tricky bug when adding onIsDragging as dependency
-    // eslint-disable-next-line
-  }, [isDragging])
+  }, [onIsDragging, isDragging])
 
   return (
     <ContentEditable
@@ -79,7 +77,9 @@ function TaskContainer({ title, tasks, color, onAddTask, onEditTask, onRemoveTas
     }),
   })
 
-  const highlight = isDragging || isOver
+  const isEmpty = tasks.length === 0
+
+  const highlight = !isEmpty && (isDragging || isOver)
 
   return (
     <div
@@ -97,6 +97,12 @@ function TaskContainer({ title, tasks, color, onAddTask, onEditTask, onRemoveTas
             { ...task }
           />)
       }
+      {
+        isEmpty &&
+          <div className={styles.task} style={{ backgroundColor: 'transparent', cursor: 'default' }}>
+            Sin tareas
+          </div>
+      }
     </div>
   )
 }
@@ -111,8 +117,11 @@ export default function CycleCard({ title, color, tasks, onAddTask, onEditTask, 
 
   const handleSave = () => {
     setStatus('idle')
-    onAddTask({ content: addItemText.current })
+
+    const content = addItemText.current
     addItemText.current = ''
+    if (content === "") return
+    onAddTask({ content })
   }
 
   const handleChange = (event) => {
