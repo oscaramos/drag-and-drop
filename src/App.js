@@ -4,10 +4,49 @@ import CycleCard from './CycleCard'
 import useCycle from './useCycle'
 
 export default function App() {
-  const [backlog, { add: addToBacklog, edit: editToBacklog, remove: removeToBacklog }] = useCycle()
-  const [inProgress, { add: addToInProgress, edit: editToInProgress, remove: removeToInProgress }] = useCycle()
-  const [complete, { add: addToComplete, edit: editToComplete, remove: removeToComplete }] = useCycle()
-  const [onHold, { add: addToOnHold, edit: editToOnHold, remove: removeToOnHold }] = useCycle()
+  const [backlog, { add: addToBacklog, edit: editToBacklog, remove: removeToBacklog }] = useCycle(
+    'backlog',
+    [
+      {
+        id: 1,
+        content: 'Apply to jobs',
+      },
+      {
+        id: 2,
+        content: 'Go to visit relatives',
+      },
+    ])
+  const [inProgress, { add: addToInProgress, edit: editToInProgress, remove: removeToInProgress }] = useCycle(
+    'In Progress',
+    [
+      {
+        id: 1,
+        content: 'Surviving the 2020',
+      },
+    ]
+  )
+  const [complete, { add: addToComplete, edit: editToComplete, remove: removeToComplete }] = useCycle(
+    'Complete',
+    [
+      {
+        id: 1,
+        content: 'Create portfolio',
+      },
+      {
+        id: 2,
+        content: 'Create some side projects',
+      },
+    ]
+  )
+  const [onHold, { add: addToOnHold, edit: editToOnHold, remove: removeToOnHold }] = useCycle(
+    'On Hold',
+    [
+      {
+        id: 1,
+        content: 'Being insane',
+      },
+    ]
+  )
 
   return (
     <div className={ styles.app }>

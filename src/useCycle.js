@@ -1,30 +1,17 @@
-import { useState } from 'react'
+import { useLocalStorage } from "react-use-storage"
 
 
-export default function useCycle() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      content: 'Release the course 1',
-    },
-    {
-      id: 2,
-      content: 'Release the course 2',
-    },
-    {
-      id: 3,
-      content: 'Release the course 3',
-    },
-  ])
+export default function useCycle(key, initialData) {
+  const [tasks, setTasks] = useLocalStorage(key, initialData)
 
   const add = (task) => {
-    setTasks(prevTasks =>
+    setTasks(
       [
-        ...prevTasks,
+        ...tasks,
         {
           ...task,
-          id: prevTasks.length>0
-            ? prevTasks[prevTasks.length-1]?.id + 1
+          id: tasks.length>0
+            ? tasks[tasks.length-1]?.id + 1
             : 1
         }
       ]
@@ -32,26 +19,22 @@ export default function useCycle() {
   }
 
   const edit = (newTask) => {
-    setTasks(
-      prevTasks => {
-        // If empty content then Remove item
-        if (newTask.content === '') {
-          return prevTasks.filter(task => task.id !== newTask.id)
-        } else {
-          // Otherwise then Edit the item
-          return prevTasks.map(task => task.id === newTask.id
-            ? newTask
-            : task)
-        }
-      }
-    )
+    // If empty content then Remove item
+    // Otherwise then Edit the item
+    const newTasks =
+      newTask.content === ''
+        ? tasks.filter(task => task.id !== newTask.id)
+        : tasks.map(task => task.id === newTask.id
+          ? newTask
+          : task
+        )
+
+    setTasks(newTasks)
   }
 
   const remove = (taskToRemove) => {
     setTasks(
-      prevTasks => {
-        return prevTasks.filter(task => task.id !== taskToRemove.id)
-      }
+      tasks.filter(task => task.id !== taskToRemove.id)
     )
   }
 
