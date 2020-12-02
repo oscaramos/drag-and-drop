@@ -23,6 +23,10 @@ export default function App() {
         id: 1,
         content: 'Surviving the 2020',
       },
+      {
+        id: 2,
+        content: "Getting ready for christmas",
+      },
     ]
   )
   const [complete, { add: addToComplete, edit: editToComplete, remove: removeToComplete }] = useCycle(
