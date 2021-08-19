@@ -100,7 +100,7 @@ function TaskContainer({ title, tasks, color, onAddTask, onEditTask, onRemoveTas
       {
         isEmpty &&
           <div className={styles.task} style={{ backgroundColor: 'transparent', cursor: 'default' }}>
-            Sin tareas
+            There are no tasks
           </div>
       }
     </div>

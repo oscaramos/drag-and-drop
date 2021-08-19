@@ -9,11 +9,11 @@ export default function App() {
     [
       {
         id: 1,
-        content: 'Apply to jobs',
+        content: 'Go shopping',
       },
       {
         id: 2,
-        content: 'Go to visit relatives',
+        content: 'Make the dinner',
       },
     ])
   const [inProgress, { add: addToInProgress, edit: editToInProgress, remove: removeToInProgress }] = useCycle(
@@ -21,11 +21,11 @@ export default function App() {
     [
       {
         id: 1,
-        content: 'Surviving the 2020',
+        content: 'Working hard',
       },
       {
         id: 2,
-        content: "Getting ready for christmas",
+        content: "Learning new things",
       },
     ]
   )
@@ -34,22 +34,21 @@ export default function App() {
     [
       {
         id: 1,
-        content: 'Create portfolio',
+        content: 'Created portfolio',
       },
       {
         id: 2,
-        content: 'Create some side projects',
+        content: 'Created some side projects',
+      },
+      {
+        id: 3,
+        content: 'Got my first developer job',
       },
     ]
   )
   const [onHold, { add: addToOnHold, edit: editToOnHold, remove: removeToOnHold }] = useCycle(
     'On Hold',
-    [
-      {
-        id: 1,
-        content: 'Being insane',
-      },
-    ]
+    []
   )
 
   return (
