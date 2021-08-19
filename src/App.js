@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./App.module.css";
-import CycleCard from "./CycleCard";
-import useCycle from "./useCycle";
+import useCycle from "./hooks/useCycle";
+import CycleCard from "./components/CycleCard/CycleCard";
 
 export default function App() {
   const [
