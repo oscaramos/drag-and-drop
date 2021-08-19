@@ -1,7 +1,11 @@
 import React from "react";
-import styles from "./App.module.css";
+
 import useCycle from "./hooks/useCycle";
+
+import TrashCan from "./components/TrashCan/TrashCan";
 import CycleCard from "./components/CycleCard/CycleCard";
+
+import styles from "./App.module.css";
 
 export default function App() {
   const [
@@ -93,6 +97,7 @@ export default function App() {
           onRemoveTask={(taskToRemove) => removeToOnHold(taskToRemove)}
         />
       </div>
+      <TrashCan />
     </div>
   );
 }
