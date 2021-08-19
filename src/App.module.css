@@ -1,58 +1,57 @@
 .app {
-    min-width: 100vw;
-    min-height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app:before {
-    content: "";
-    position: absolute;
+  content: "";
+  position: absolute;
 
-    top: 0;
-    left: 0;
+  top: 0;
+  left: 0;
 
-    background-image: url("./background.jpg");
-    background-size: cover;
-    filter: brightness(0.75);
+  background-image: url("./background.jpg");
+  background-size: cover;
+  filter: brightness(0.75);
 
-    min-width: 100vw;
-    min-height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
 
-    z-index: -1;
+  z-index: -1;
 }
 
 h1 {
-    text-shadow: 2px 2px 5px #000000;
-    letter-spacing: 4px;
+  text-shadow: 2px 2px 5px #000000;
+  letter-spacing: 4px;
 }
 
 h2 {
-    text-shadow: 2px 2px 5px #000000;
-    letter-spacing: 2px;
+  text-shadow: 2px 2px 5px #000000;
+  letter-spacing: 2px;
 }
 
 .title {
-    color: white;
-    font-size: 36px;
+  color: white;
+  font-size: 36px;
 }
 
 .cycleCardsContainer {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
 
-    width: 100%;
-    padding: 0 36px;
+  width: 100%;
+  padding: 0 36px;
 }
 
 /*-- Phone --*/
 @media (max-width: 768px) {
-    .cycleCardsContainer {
-        display: flex;
-        flex-direction: column;
-    }
+  .cycleCardsContainer {
+    display: flex;
+    flex-direction: column;
+  }
 }
-
