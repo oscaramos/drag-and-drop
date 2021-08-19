@@ -26,9 +26,6 @@ export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
 
   const handleChange = (event) => {
     internalContent.current = event.target.value;
-  };
-
-  const handleBlur = () => {
     onEdit({ id, content: internalContent.current });
   };
 
@@ -44,7 +41,6 @@ export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
       html={internalContent.current}
       disabled={false}
       onChange={handleChange}
-      onBlur={handleBlur}
       innerRef={drag}
     />
   );
