@@ -77,6 +77,12 @@
     margin-top: 8px;
 }
 
+.operationsButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .addOperation {
     padding: 12px;
     align-self: flex-start;
@@ -111,6 +117,27 @@
 }
 
 .saveOperation:hover {
+    filter: brightness(0.9);
+}
+
+.cancelOperation {
+    padding: 12px;
+    align-self: flex-end;
+
+    border-radius: 5px;
+
+    background-color: transparent;
+
+    color: white;
+
+    border: 1px solid #444444;
+
+    cursor: pointer;
+
+    transition: all 0.1s ease-in-out;
+}
+
+.cancelOperation:hover {
     filter: brightness(0.9);
 }
 

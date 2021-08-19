@@ -124,6 +124,10 @@ export default function CycleCard({ title, color, tasks, onAddTask, onEditTask, 
     onAddTask({ content })
   }
 
+  const handleCancel = () => {
+    setStatus('idle')
+  }
+
   const handleChange = (event) => {
     addItemText.current = event.target.value
   }
@@ -149,7 +153,10 @@ export default function CycleCard({ title, color, tasks, onAddTask, onEditTask, 
         {
           status === 'adding' &&
           <>
-            <div className={ styles.saveOperation } onClick={ handleSave }>Save item</div>
+            <div className={ styles.operationsButtonsContainer }>
+              <div className={ styles.cancelOperation } onClick={ handleCancel }>Cancel</div>
+              <div className={ styles.saveOperation } onClick={ handleSave }>Save item</div>
+            </div>
             <AddItemInput value={ addItemText } onChange={ handleChange } />
           </>
         }
