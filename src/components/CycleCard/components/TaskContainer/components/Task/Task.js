@@ -9,9 +9,9 @@ import { ItemTypes } from "../../constants";
 export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
   const internalContent = useRef(content);
 
-  const [{ isDragging, didDropped }, drag] = useDrag({
+  const [{ isDragging, didDropped }, drag] = useDrag(() => ({
+    type: ItemTypes.TASK,
     item: {
-      type: ItemTypes.TASK,
       data: { content: internalContent.current },
     },
     collect: (monitor) => ({
@@ -22,7 +22,7 @@ export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
         onRemoveTask({ id });
       }
     },
-  });
+  }), []);
 
   const handleChange = (event) => {
     internalContent.current = event.target.value;
@@ -39,7 +39,7 @@ export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
       style={{ backgroundColor: didDropped ? "red" : undefined }}
       className={styles.task}
       html={internalContent.current}
-      disabled={false}
+      disabled={true}
       onChange={handleChange}
       innerRef={drag}
     />
