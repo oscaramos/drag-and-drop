@@ -6,8 +6,6 @@ import styles from "./Task.module.css";
 
 import { ItemTypes } from "../../constants";
 
-import useCycle from "../../../../../../hooks/useCycle";
-
 export function Task({
   id,
   title,

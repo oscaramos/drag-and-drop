@@ -14,11 +14,9 @@ export default function TrashCan() {
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
-    drop({ data: { id, title } }) {
-      return {
-        status: "removed",
-      };
-    },
+    drop: () => ({
+      status: "removed",
+    }),
   });
 
   return (
