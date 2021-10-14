@@ -6,11 +6,14 @@ import styles from "./Task.module.css";
 
 import { ItemTypes } from "../../constants";
 
+import useCycle from "../../../../../../hooks/useCycle";
+
 export function Task({
   id,
   title,
   content,
   onEdit,
+  onRemoveTask,
   onIsDragging,
   canEditItems,
 }) {
@@ -25,6 +28,12 @@ export function Task({
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
+      end: (item, monitor) => {
+        const dropStatus = monitor.getDropResult()?.status;
+        if (dropStatus === "translated" || dropStatus === "removed") {
+          onRemoveTask({ id });
+        }
+      },
     }),
     []
   );
