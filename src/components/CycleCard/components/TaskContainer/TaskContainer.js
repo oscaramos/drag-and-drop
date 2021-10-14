@@ -17,7 +17,11 @@ export function TaskContainer({ title, color, canEditItems }) {
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK,
-    drop: (item) => add({ content: item.data.content }),
+    drop: (item) => {
+      if (title !== item.data.title) {
+        add({ content: item.data.content });
+      }
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
