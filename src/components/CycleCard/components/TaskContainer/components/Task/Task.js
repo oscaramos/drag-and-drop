@@ -5,17 +5,11 @@ import ContentEditable from "react-contenteditable";
 import styles from "./Task.module.css";
 
 import { ItemTypes } from "../../constants";
+import { useCycle } from "../../../../../../hooks/useCycle";
 
-export function Task({
-  id,
-  title,
-  content,
-  onEdit,
-  onRemoveTask,
-  onIsDragging,
-  canEditItems,
-}) {
+export function Task({ id, title, content, onIsDragging, canEditItems }) {
   const internalContent = useRef(content);
+  const [, { edit, remove }] = useCycle();
 
   const [{ isDragging, didDropped }, drag] = useDrag(
     () => ({
@@ -29,7 +23,7 @@ export function Task({
       end: (item, monitor) => {
         const dropStatus = monitor.getDropResult()?.status;
         if (dropStatus === "translated" || dropStatus === "removed") {
-          onRemoveTask({ id });
+          remove({ id });
         }
       },
     }),
@@ -38,7 +32,7 @@ export function Task({
 
   const handleChange = (event) => {
     internalContent.current = event.target.value;
-    onEdit({ id, content: internalContent.current });
+    edit({ id, content: internalContent.current });
   };
 
   useEffect(() => {

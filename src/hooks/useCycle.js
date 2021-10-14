@@ -1,32 +1,53 @@
-import { useLocalStorage } from "react-use-storage";
+import { createContext, useContext, useEffect, useState } from "react";
 
-export default function useCycle(key, initialData) {
-  const [tasks, setTasks] = useLocalStorage(key, initialData);
+const CycleContext = createContext(undefined);
+
+export function CycleProvider({ lskey, initialData, children }) {
+  const [tasks, setTasks] = useState(() => {
+    const storedValue = window.localStorage.getItem(lskey);
+    return storedValue !== null ? JSON.parse(storedValue) : initialData;
+  });
 
   const add = (task) => {
-    setTasks([
-      ...tasks,
+    setTasks((prevTasks) => [
+      ...prevTasks,
       {
         ...task,
-        id: tasks.length > 0 ? tasks[tasks.length - 1]?.id + 1 : 1,
+        id: prevTasks.length > 0 ? prevTasks[prevTasks.length - 1]?.id + 1 : 1,
       },
     ]);
   };
 
   const edit = (newTask) => {
-    // If empty content then Remove item
-    // Otherwise then Edit the item
-    const newTasks =
+    setTasks((prevTasks) =>
       newTask.content === ""
-        ? tasks.filter((task) => task.id !== newTask.id)
-        : tasks.map((task) => (task.id === newTask.id ? newTask : task));
-
-    setTasks(newTasks);
+        ? prevTasks.filter((task) => task.id !== newTask.id)
+        : prevTasks.map((task) => (task.id === newTask.id ? newTask : task))
+    );
   };
 
   const remove = (taskToRemove) => {
-    setTasks(tasks.filter((task) => task.id !== taskToRemove.id));
+    setTasks((prevTasks) =>
+      prevTasks.filter((task) => task.id !== taskToRemove.id)
+    );
   };
 
-  return [tasks, { add, edit, remove }];
+  useEffect(() => {
+    localStorage.setItem(lskey, JSON.stringify(tasks));
+  }, [lskey, tasks]);
+
+  return (
+    <CycleContext.Provider value={[tasks, { add, edit, remove }]}>
+      {children}
+    </CycleContext.Provider>
+  );
+}
+
+export function useCycle() {
+  const context = useContext(CycleContext);
+  if (context === undefined) {
+    throw new Error("useCycle must be within a CycleProvider");
+  }
+  console.log(context);
+  return context;
 }
