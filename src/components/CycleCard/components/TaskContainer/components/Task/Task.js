@@ -14,9 +14,9 @@ export function Task({ id, title, content, onIsDragging, canEditItems }) {
   const [{ isDragging, didDropped }, drag] = useDrag(
     () => ({
       type: ItemTypes.TASK,
-      item: {
+      item: () => ({
         data: { id, title, content: internalContent.current },
-      },
+      }),
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
