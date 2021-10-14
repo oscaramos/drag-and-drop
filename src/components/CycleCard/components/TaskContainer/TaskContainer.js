@@ -36,6 +36,7 @@ export function TaskContainer({ title, color }) {
       {tasks.map((task) => (
         <Task
           key={`${title}-${task.id}`}
+          title={title}
           onEdit={edit}
           onIsDragging={(isDragging) => setIsDragging(isDragging)}
           onRemoveTask={remove}

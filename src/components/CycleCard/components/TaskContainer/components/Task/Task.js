@@ -6,23 +6,21 @@ import styles from "./Task.module.css";
 
 import { ItemTypes } from "../../constants";
 
-export function Task({ id, content, onEdit, onIsDragging, onRemoveTask }) {
+export function Task({ id, title, content, onEdit, onIsDragging }) {
   const internalContent = useRef(content);
 
-  const [{ isDragging, didDropped }, drag] = useDrag(() => ({
-    type: ItemTypes.TASK,
-    item: {
-      data: { content: internalContent.current },
-    },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+  const [{ isDragging, didDropped }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.TASK,
+      item: {
+        data: { id, title, content: internalContent.current },
+      },
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
     }),
-    end(item, monitor) {
-      if (monitor.didDrop()) {
-        onRemoveTask({ id });
-      }
-    },
-  }), []);
+    []
+  );
 
   const handleChange = (event) => {
     internalContent.current = event.target.value;
