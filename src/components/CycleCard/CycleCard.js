@@ -5,16 +5,13 @@ import { TaskContainer } from "./components/TaskContainer/TaskContainer";
 
 import styles from "./CycleCard.module.css";
 
-export default function CycleCard({
-  title,
-  color,
-  tasks,
-  onAddTask,
-  onEditTask,
-  onRemoveTask,
-}) {
+import useCycle from "../../hooks/useCycle";
+
+export default function CycleCard({ title, initialData, color }) {
   const [status, setStatus] = useState("idle");
   const addItemText = useRef("");
+
+  const [, { add }] = useCycle(title, initialData);
 
   const handleAdd = () => {
     setStatus("adding");
@@ -26,7 +23,7 @@ export default function CycleCard({
     const content = addItemText.current;
     addItemText.current = "";
     if (content === "") return;
-    onAddTask({ content });
+    add({ content });
   };
 
   const handleCancel = () => {
@@ -43,14 +40,7 @@ export default function CycleCard({
         {title}
       </h2>
 
-      <TaskContainer
-        title={title}
-        tasks={tasks}
-        onAddTask={onAddTask}
-        onEditTask={onEditTask}
-        onRemoveTask={onRemoveTask}
-        color={color}
-      />
+      <TaskContainer title={title} color={color} />
 
       <div className={styles.operationsContainer}>
         {status === "idle" && (

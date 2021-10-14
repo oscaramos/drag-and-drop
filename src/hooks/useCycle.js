@@ -28,9 +28,5 @@ export default function useCycle(key, initialData) {
     setTasks(tasks.filter((task) => task.id !== taskToRemove.id));
   };
 
-  const data = {
-    tasks,
-  };
-
-  return [data, { add, edit, remove }];
+  return [tasks, { add, edit, remove }];
 }

@@ -8,19 +8,16 @@ import { ItemTypes } from "./constants";
 
 import styles from "./TaskContainer.module.css";
 
-export function TaskContainer({
-  title,
-  tasks,
-  color,
-  onAddTask,
-  onEditTask,
-  onRemoveTask,
-}) {
+import useCycle from "../../../../hooks/useCycle";
+
+export function TaskContainer({ title, color }) {
+  const [tasks, { add, edit, remove }] = useCycle(title);
+
   const [isDragging, setIsDragging] = useState(false);
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK,
-    drop: (item) => onAddTask({ content: item.data.content }),
+    drop: (item) => add({ content: item.data.content }),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -39,9 +36,9 @@ export function TaskContainer({
       {tasks.map((task) => (
         <Task
           key={`${title}-${task.id}`}
-          onEdit={onEditTask}
+          onEdit={edit}
           onIsDragging={(isDragging) => setIsDragging(isDragging)}
-          onRemoveTask={onRemoveTask}
+          onRemoveTask={remove}
           {...task}
         />
       ))}
