@@ -6,7 +6,14 @@ import styles from "./Task.module.css";
 
 import { ItemTypes } from "../../constants";
 
-export function Task({ id, title, content, onEdit, onIsDragging }) {
+export function Task({
+  id,
+  title,
+  content,
+  onEdit,
+  onIsDragging,
+  canEditItems,
+}) {
   const internalContent = useRef(content);
 
   const [{ isDragging, didDropped }, drag] = useDrag(
@@ -37,7 +44,7 @@ export function Task({ id, title, content, onEdit, onIsDragging }) {
       style={{ backgroundColor: didDropped ? "red" : undefined }}
       className={styles.task}
       html={internalContent.current}
-      disabled={true}
+      disabled={!canEditItems}
       onChange={handleChange}
       innerRef={drag}
     />

@@ -11,10 +11,16 @@ export default function CycleCard({ title, initialData, color }) {
   const [status, setStatus] = useState("idle");
   const addItemText = useRef("");
 
+  const [canEditItems, setCanEditItems] = useState(false);
+
   const [, { add }] = useCycle(title, initialData);
 
   const handleAdd = () => {
     setStatus("adding");
+  };
+
+  const handleToggleEdit = () => {
+    setCanEditItems((canEdit) => !canEdit);
   };
 
   const handleSave = () => {
@@ -40,12 +46,17 @@ export default function CycleCard({ title, initialData, color }) {
         {title}
       </h2>
 
-      <TaskContainer title={title} color={color} />
+      <TaskContainer title={title} color={color} canEditItems={canEditItems} />
 
       <div className={styles.operationsContainer}>
         {status === "idle" && (
-          <div className={styles.addOperation} onClick={handleAdd}>
-            ➕ Add item
+          <div className={styles.operationsButtonsContainerIdle}>
+            <div className={styles.operationButton} onClick={handleAdd}>
+              ➕ Add item
+            </div>
+            <div className={styles.operationButton} onClick={handleToggleEdit}>
+              {canEditItems ? "🖉 Disable Edit" : "🖉 Enable Edit"}
+            </div>
           </div>
         )}
         {status === "adding" && (

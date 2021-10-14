@@ -32,7 +32,13 @@
   justify-content: space-around;
 }
 
-.addOperation {
+.operationsButtonsContainerIdle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.operationButton {
   padding: 12px;
   align-self: flex-start;
 
@@ -45,7 +51,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.addOperation:hover {
+.operationButton:hover {
   background-color: #e9ebeb;
   color: black;
 }

@@ -10,7 +10,7 @@ import styles from "./TaskContainer.module.css";
 
 import useCycle from "../../../../hooks/useCycle";
 
-export function TaskContainer({ title, color }) {
+export function TaskContainer({ title, color, canEditItems }) {
   const [tasks, { add, edit, remove }] = useCycle(title);
 
   const [isDragging, setIsDragging] = useState(false);
@@ -39,6 +39,7 @@ export function TaskContainer({ title, color }) {
           title={title}
           onEdit={edit}
           onIsDragging={(isDragging) => setIsDragging(isDragging)}
+          canEditItems={canEditItems}
           onRemoveTask={remove}
           {...task}
         />
