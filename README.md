@@ -1,6 +1,6 @@
 # Drag and Drop 📝
 
-App using the kanban board with tasks that can be dragged and dropped between kaban cycles
+App using a kanban board with tasks that can be dragged and dropped between kaban cycles
 
 # Screenshot
 
