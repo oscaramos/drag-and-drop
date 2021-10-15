@@ -12,7 +12,6 @@ App using a kanban board with tasks that can be dragged and dropped between kanb
 - [CSS Modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/) - CSS Modules
 - [react-contenteditable](https://www.npmjs.com/package/react-contenteditable) - For adding and editing tasks
 - [react-dnd](https://www.npmjs.com/package/react-dnd) - For Drag and Drop on tasks
-- [react-use-storage](https://www.npmjs.com/package/react-use-storage) - Local Storage for saving tasks on the browser
 
 # Deployment
 
