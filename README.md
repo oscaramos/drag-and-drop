@@ -1,15 +1,10 @@
 # Drag and Drop 📝
 
-App using the kaban board with tasks that can be dragged and dropped between kaban cycles
-
-# Motivation
-
-This idea came out from [JavaScript Web Projects: 20 Projects to Build Your Portfolio](https://academy.zerotomastery.io/p/javascript-projects)  
-Project 18 of 20
+App using the kanban board with tasks that can be dragged and dropped between kaban cycles
 
 # Screenshot
 
-<img src='./Screenshot.png' alt='Kaban board with some tasks and a forest on the background' width='1000' />
+<img src='./Screenshot.png' alt='Kanban board with some tasks and a forest on the background' width='1000' />
 
 # Tools
 
